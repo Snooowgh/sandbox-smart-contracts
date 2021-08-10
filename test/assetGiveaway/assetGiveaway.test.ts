@@ -3,6 +3,7 @@ import {setupTestGiveaway} from './fixtures';
 import {constants} from 'ethers';
 import {waitFor, expectReceiptEventWithArgs} from '../utils';
 import {expect} from '../chai-setup';
+import {deployments} from 'hardhat';
 
 import helpers from '../../lib/merkleTreeHelper';
 const {calculateClaimableAssetHash} = helpers;
@@ -11,6 +12,10 @@ const zeroAddress = constants.AddressZero;
 
 // eslint-disable-next-line mocha/no-skipped-tests
 describe('Asset_Giveaway', function () {
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   it('User cannot claim when test contract holds zero assets', async function () {
     const options = {
       assetsHolder: true,

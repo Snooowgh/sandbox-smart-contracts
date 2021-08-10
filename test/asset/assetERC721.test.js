@@ -11,7 +11,6 @@ const erc721Tests = require('../erc721')(
   async () => {
     const others = await getUnnamedAccounts();
     const {assetBouncerAdmin} = await getNamedAccounts();
-    await deployments.fixture('Asset');
     const minter = others[0];
     const asset = await ethers.getContract('Asset');
     const assetAsMinter = await asset.connect(
@@ -75,6 +74,10 @@ function recurse(test) {
 }
 
 describe('Asset:ERC721', function () {
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   for (const test of erc721Tests) {
     // eslint-disable-next-line mocha/no-setup-in-describe
     recurse(test);

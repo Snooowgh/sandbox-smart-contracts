@@ -44,13 +44,6 @@ export const setupTestGiveaway = deployments.createFixture(async function (
   const nftGiveawayAdmin = otherAccounts[0];
   const others = otherAccounts.slice(1);
 
-  await deployments.fixture([
-    'Multi_Giveaway_1',
-    'Asset',
-    'Gems',
-    'Sand',
-    'Catalysts',
-  ]);
   const sandContract = await ethers.getContract('Sand');
   const assetContract = await ethers.getContract('Asset');
   const speedGemContract = await ethers.getContract('Gem_SPEED');

@@ -3,7 +3,6 @@ import {ethers, deployments, getNamedAccounts} from 'hardhat';
 import {Contract, BigNumber} from 'ethers';
 
 export const setupERC677 = deployments.createFixture(async () => {
-  await deployments.fixture('Gems');
   const accounts = await getNamedAccounts();
   const gemToken: Contract = await ethers.getContract('Gem_POWER');
   await deployments.deploy('MockERC677Receiver', {

@@ -40,8 +40,11 @@ describe('MockSANDRewardPool', function () {
   let multiplierNFTokenAsAdmin;
   let liquidityRewardAdmin;
 
+  beforeEach(async function () {
+    await deployments.fixture();
+  });  
+
   async function createFixture(supplyRewardTokens, notifyReward) {
-    await deployments.fixture('LandWeightedSANDRewardPool');
     ({
       deployer,
       sandAdmin,
@@ -130,7 +133,6 @@ describe('MockSANDRewardPool', function () {
       await multiplierNFTokenAsAdmin.mint(user, i);
     }
   }
-
   it('Pool contains reward tokens', async function () {
     await createFixture(true, true);
     await ethers.getContract(POOL);

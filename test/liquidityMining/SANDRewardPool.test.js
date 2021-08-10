@@ -45,14 +45,11 @@ describe('ActualSANDRewardPool', function () {
   let multiplierNFTokenAsAdmin;
   let liquidityRewardAdmin;
 
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   async function createFixture() {
-    // TODO use deployments.createFixture()
-    await deployments.fixture([
-      'LandWeightedSANDRewardPool',
-      'UNI_SAND_ETH',
-      'Sand',
-      'Land',
-    ]);
     await setupLandWeightedRewardPool();
 
     ({deployer, liquidityRewardAdmin, landAdmin} = await getNamedAccounts());

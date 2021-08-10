@@ -12,7 +12,6 @@ function testCatalyst(catalystName) {
     async () => {
       const others = await getUnnamedAccounts();
       const {catalystMinter} = await getNamedAccounts();
-      await deployments.fixture('Catalysts');
       const contract = await ethers.getContract(catalystName);
 
       function mint(to, amount) {
@@ -37,6 +36,10 @@ function testCatalyst(catalystName) {
   );
 
   describe(catalystName, function () {
+    beforeEach(async function () {
+      await deployments.fixture();
+    });
+
     for (const test of erc20Tests) {
       // eslint-disable-next-line mocha/no-setup-in-describe
       recurseTests(test);

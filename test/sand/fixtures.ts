@@ -9,12 +9,6 @@ import {waitFor, setupUser} from '../utils';
 
 export const setupERC20BasicApproveExtension = deployments.createFixture(
   async function () {
-    await deployments.fixture([
-      'Land',
-      'Sand',
-      'LandPreSale_5',
-      'ERC20_PREDICATE',
-    ]);
     const accounts = await getNamedAccounts();
     const others = await getUnnamedAccounts();
     const user0 = others[0];

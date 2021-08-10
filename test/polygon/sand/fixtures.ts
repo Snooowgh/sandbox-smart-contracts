@@ -8,7 +8,6 @@ import {
 import {setupUsers, setupUser} from '../../utils';
 
 export const setupSand = deployments.createFixture(async () => {
-  await deployments.fixture('PolygonSand');
   const Sand = await ethers.getContract('PolygonSand');
   const accounts = await getNamedAccounts();
   const unnamedAccounts = await getUnnamedAccounts();

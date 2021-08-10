@@ -13,7 +13,6 @@ function testAsset() {
     const otherAccounts = await getUnnamedAccounts();
     const minter = otherAccounts[0];
     const users = otherAccounts.slice(1);
-    await deployments.fixture('Asset');
 
     const assetContractAsBouncerAdmin = await ethers.getContract(
       'Asset',
@@ -130,6 +129,10 @@ function testAsset() {
   }, {});
 
   describe('Asset:ERC1155', function () {
+    beforeEach(async function () {
+      await deployments.fixture();
+    });
+
     for (const test of erc1155Tests) {
       // eslint-disable-next-line mocha/no-setup-in-describe
       recurseTests(test);

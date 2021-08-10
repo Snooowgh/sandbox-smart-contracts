@@ -23,7 +23,6 @@ const setupTest = deployments.createFixture(
     sandBeneficiary: User;
     usersWithoutSand: User[];
   }> => {
-    await deployments.fixture('SandBaseToken');
     const SandBaseToken = await ethers.getContract('SandBaseToken');
     const unnamedAccounts = await getUnnamedAccounts();
     let usersWithoutSand = await setupUsers(unnamedAccounts, {SandBaseToken});
@@ -44,6 +43,10 @@ const setupTest = deployments.createFixture(
 );
 
 describe('SandBaseToken.sol', function () {
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   describe('Deployment', function () {
     it('total supply should be 3,000,000,000 * 10^18', async function () {
       const {SandBaseToken} = await setupTest();
@@ -140,7 +143,7 @@ describe('SandBaseToken.sol', function () {
         userWithSand.address
       );
       const sandTransferValue = DECIMALS_18.mul(200);
-      userWithSand.SandBaseToken.transfer(
+      await userWithSand.SandBaseToken.transfer(
         userWithSand.address,
         sandTransferValue
       );
@@ -158,13 +161,16 @@ describe('SandBaseToken.sol', function () {
         usersWithoutSand,
       } = await setupTest();
       const sandTransferValue = DECIMALS_18.mul(200);
-      sandBeneficiary.SandBaseToken.transfer(
-        usersWithoutSand,
+      await sandBeneficiary.SandBaseToken.transfer(
+        usersWithoutSand[0].address,
         sandTransferValue
       );
-      userWithSand.SandBaseToken.transfer(usersWithoutSand, sandTransferValue);
-      usersWithoutSand[0].SandBaseToken.transfer(
-        usersWithoutSand,
+      await userWithSand.SandBaseToken.transfer(
+        usersWithoutSand[0].address,
+        sandTransferValue
+      );
+      await usersWithoutSand[0].SandBaseToken.transfer(
+        usersWithoutSand[0].address,
         sandTransferValue
       );
       const totalSupply = await SandBaseToken.totalSupply();
@@ -177,7 +183,7 @@ describe('SandBaseToken.sol', function () {
       const {userWithSand, usersWithoutSand} = await setupTest();
       const TOTAL_ALLOWANCE = DECIMALS_18.mul(250);
       const USED_ALLOWANCE = DECIMALS_18.mul(350);
-      userWithSand.SandBaseToken.approve(
+      await userWithSand.SandBaseToken.approve(
         usersWithoutSand[0].address,
         TOTAL_ALLOWANCE
       );
@@ -199,7 +205,7 @@ describe('SandBaseToken.sol', function () {
       const allowanceCarrier = usersWithoutSand[0];
       const allowanceReceiver = usersWithoutSand[1];
 
-      allowanceApprover.SandBaseToken.approve(
+      await allowanceApprover.SandBaseToken.approve(
         allowanceCarrier.address,
         TOTAL_ALLOWANCE
       );
@@ -211,7 +217,7 @@ describe('SandBaseToken.sol', function () {
         allowanceCarrier.address
       );
 
-      allowanceCarrier.SandBaseToken.transferFrom(
+      await allowanceCarrier.SandBaseToken.transferFrom(
         allowanceApprover.address,
         allowanceReceiver.address,
         TRANSFER
@@ -238,7 +244,7 @@ describe('SandBaseToken.sol', function () {
       const allowanceCarrier = usersWithoutSand[0];
       const allowanceReceiver = usersWithoutSand[1];
 
-      allowanceApprover.SandBaseToken.approve(
+      await allowanceApprover.SandBaseToken.approve(
         allowanceCarrier.address,
         TOTAL_ALLOWANCE
       );
@@ -250,7 +256,7 @@ describe('SandBaseToken.sol', function () {
         allowanceCarrier.address
       );
 
-      allowanceCarrier.SandBaseToken.transferFrom(
+      await allowanceCarrier.SandBaseToken.transferFrom(
         allowanceApprover.address,
         allowanceReceiver.address,
         TRANSFER

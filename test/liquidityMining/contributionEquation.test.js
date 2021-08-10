@@ -178,8 +178,11 @@ describe('SafeMathWithRequire', function () {
 });
 
 describe('LandWeightedSANDRewardPool computation', function () {
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   it('computing contributions', async function () {
-    await deployments.fixture('LandWeightedSANDRewardPool');
     const contract = await ethers.getContract('LandWeightedSANDRewardPool');
     for (const values of valuesToTests) {
       const result = await contract.computeContribution(

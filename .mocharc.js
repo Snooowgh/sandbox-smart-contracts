@@ -12,5 +12,6 @@ module.exports = {
   timeout: 0,
   ui: 'bdd',
   watch: false,
+  bail: true,
   'watch-files': ['src/**/*.sol', 'test/**/*.ts', 'test/**/*.js'],
 };

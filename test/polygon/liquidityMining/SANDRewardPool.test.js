@@ -50,14 +50,11 @@ describe('Polygon ActualSANDRewardPool', function () {
   let rewardTokenAsAdmin;
   let rewardPoolAsOwner;
 
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   async function createFixture() {
-    // TODO use deployments.createFixture()
-    await deployments.fixture([
-      'PolygonLandWeightedSANDRewardPool',
-      'FakeLPSandMatic',
-      'SandBaseToken',
-      'Land',
-    ]);
     await setupLandWeightedRewardPool();
 
     ({

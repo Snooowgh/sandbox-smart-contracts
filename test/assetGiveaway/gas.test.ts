@@ -3,8 +3,13 @@ import {setupTestGiveaway} from './fixtures';
 import {waitFor} from '../utils';
 import helpers from '../../lib/merkleTreeHelper';
 const {calculateClaimableAssetHash} = helpers;
+import {deployments} from 'hardhat';
 
 describe('GAS:Asset_Giveaway_1:Claiming', function () {
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const gasReport: any = {};
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

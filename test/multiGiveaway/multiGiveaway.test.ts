@@ -3,6 +3,7 @@ import {setupTestGiveaway} from './fixtures';
 import {constants, BigNumber} from 'ethers';
 import {waitFor, expectReceiptEventWithArgs} from '../utils';
 import {expect} from '../chai-setup';
+import {deployments} from 'hardhat';
 
 import helpers from '../../lib/merkleTreeHelper';
 const {calculateMultiClaimHash} = helpers;
@@ -12,6 +13,10 @@ const emptyBytes32 =
   '0x0000000000000000000000000000000000000000000000000000000000000000';
 
 describe('Multi_Giveaway', function () {
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   describe('Multi_Giveaway_common_functionality', function () {
     it('Admin can add a new giveaway', async function () {
       const options = {};

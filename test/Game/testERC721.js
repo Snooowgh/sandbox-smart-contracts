@@ -28,7 +28,6 @@ const erc721Tests = require('../erc721')(
   async () => {
     const {gameTokenAdmin} = await getNamedAccounts();
     const others = await getUnnamedAccounts();
-    await deployments.fixture(['ChildGameToken']);
 
     const contract = await ethers.getContract('ChildGameToken');
 
@@ -85,6 +84,10 @@ function recurse(test) {
 }
 
 describe('GameToken:ERC721', function () {
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   for (const test of erc721Tests) {
     // eslint-disable-next-line mocha/no-setup-in-describe
     recurse(test);

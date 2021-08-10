@@ -5,8 +5,8 @@ import {setupGemsAndCatalysts} from './fixtures';
 import {waitFor} from '../../../utils';
 import catalysts from '../../../../data/catalysts';
 describe('GemsCatalystsRegistry', function () {
-  before(async function () {
-    await deployments.fixture('GemsCatalystsRegistry');
+  beforeEach(async function () {
+    await deployments.fixture();
   });
 
   it('getMaxGems for commonCatalyst should be 1', async function () {

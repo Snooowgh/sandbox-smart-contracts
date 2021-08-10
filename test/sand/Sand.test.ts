@@ -23,7 +23,6 @@ const setupTest = deployments.createFixture(
     sandBeneficiary: User;
     usersWithoutSand: User[];
   }> => {
-    await deployments.fixture('Sand');
     const Sand = await ethers.getContract('Sand');
     const unnamedAccounts = await getUnnamedAccounts();
     let usersWithoutSand = await setupUsers(unnamedAccounts, {Sand});
@@ -41,6 +40,10 @@ const setupTest = deployments.createFixture(
 );
 
 describe('Sand.sol', function () {
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   describe('Deployment', function () {
     it('total supply should be 3,000,000,000 * 10^18', async function () {
       const {Sand} = await setupTest();

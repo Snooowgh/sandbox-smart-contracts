@@ -12,7 +12,6 @@ function testGem(gemName) {
     async () => {
       const others = await getUnnamedAccounts();
       const {gemMinter} = await getNamedAccounts();
-      await deployments.fixture('Gems');
       const contract = await ethers.getContract(gemName);
 
       function mint(to, amount) {
@@ -37,6 +36,10 @@ function testGem(gemName) {
   );
 
   describe(gemName, function () {
+    beforeEach(async function () {
+      await deployments.fixture();
+    });
+
     for (const test of erc20Tests) {
       // eslint-disable-next-line mocha/no-setup-in-describe
       recurseTests(test);

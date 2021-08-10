@@ -13,7 +13,6 @@ const setupTest = deployments.createFixture(
     MockLandWithMint: Contract;
     landOwners: User[];
   }> => {
-    await deployments.fixture('MockLandWithMint');
     const MockLandWithMint = await ethers.getContract('MockLandWithMint');
     const unnamedAccounts = await getUnnamedAccounts();
     const landOwners = await setupUsers(unnamedAccounts, {MockLandWithMint});
@@ -22,6 +21,10 @@ const setupTest = deployments.createFixture(
 );
 
 describe('MockLandWithMint.sol', function () {
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   describe('Mint and transfer', function () {
     it('testing transferQuad', async function () {
       const {landOwners} = await setupTest();

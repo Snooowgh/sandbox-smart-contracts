@@ -32,7 +32,6 @@ export const setupTestGiveaway = deployments.createFixture(async function (
   const {deployer, assetAdmin, assetBouncerAdmin} = await getNamedAccounts();
   const otherAccounts = await getUnnamedAccounts();
 
-  await deployments.fixture(['Asset']);
   const assetContract = await ethers.getContract('Asset');
 
   const emptyBytes32 =

@@ -18,7 +18,11 @@ const config: HardhatUserConfig = {
     maxMethodDiff: 10,
   },
   mocha: {
+    reporter: 'spec',
+    slow: 300,
     timeout: 0,
+    bail: true,
+    ui: 'bdd',
   },
   solidity: {
     compilers: [

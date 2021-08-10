@@ -5,10 +5,15 @@ import {expect} from '../../chai-setup';
 import {ethers} from 'hardhat';
 import {AbiCoder} from 'ethers/lib/utils';
 import {BigNumber} from '@ethersproject/bignumber';
+import {deployments} from 'hardhat';
 
 const abiCoder = new AbiCoder();
 
 describe('PolygonSand.sol', function () {
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   describe('Bridging: L1 <> L2', function () {
     it('should be able to transfer SAND: L1 to L2', async function () {
       const polygon = await setupPolygonSand();

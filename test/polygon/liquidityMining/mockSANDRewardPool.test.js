@@ -40,8 +40,11 @@ describe('Polygon MockSANDRewardPool', function () {
   let multiplierNFTokenAsAdmin;
   let liquidityRewardAdmin;
 
+  beforeEach(async function () {
+    await deployments.fixture();
+  });
+
   async function createFixture(supplyRewardTokens, notifyReward) {
-    await deployments.fixture('PolygonLandWeightedSANDRewardPool');
     ({
       deployer,
       sandBeneficiary,
