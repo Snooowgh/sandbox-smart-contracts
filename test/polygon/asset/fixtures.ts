@@ -7,6 +7,7 @@ import {
 } from 'hardhat';
 
 import {waitFor, setupUsers} from '../../utils';
+import {Contract} from 'ethers';
 // import asset_regenerate_and_distribute from '../../setup/asset_regenerate_and_distribute';
 
 export const setupAsset = deployments.createFixture(async function () {
@@ -22,6 +23,7 @@ export const setupAsset = deployments.createFixture(async function () {
     'PolygonAsset',
     assetBouncerAdmin
   );
+
   await waitFor(assetContractAsBouncerAdmin.setBouncer(minter, true));
   const Asset = await ethers.getContract('PolygonAsset', minter);
   const childChainManager = await ethers.getContract('CHILD_CHAIN_MANAGER');
@@ -104,5 +106,19 @@ export const setupAsset = deployments.createFixture(async function () {
     mintMultiple,
     trustedForwarder,
     childChainManager,
+  };
+});
+
+export const setupAssetRegistry = deployments.createFixture(async function () {
+  const {assetAttributesRegistryAdmin} = await getNamedAccounts();
+  const assetAttributesRegistry: Contract = await ethers.getContract(
+    'AssetAttributesRegistry'
+  );
+  const assetAttributesRegistryAsRegistryAdmin = await assetAttributesRegistry.connect(
+    ethers.provider.getSigner(assetAttributesRegistryAdmin)
+  );
+
+  return {
+    assetAttributesRegistryAsRegistryAdmin,
   };
 });
