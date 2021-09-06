@@ -50,7 +50,7 @@ export const setupAsset = deployments.createFixture(async function () {
     const rarity = 0;
     const owner = to;
     const data = '0x';
-
+    console.log('id %s', id);
     let receipt;
     try {
       receipt = await waitFor(
